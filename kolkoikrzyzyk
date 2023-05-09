@@ -19,9 +19,9 @@ def get_gracz_ruch(gracz, plansza):
 
 def spr_wygr(plansza):
     win_pozycja = (
-        (0, 1, 2), (3, 4, 5), (6, 7, 8),  # wiersze
-        (0, 3, 6), (1, 4, 7), (2, 5, 8),  # kolumny
-        (0, 4, 8), (2, 4, 6)             # przekątne
+        (0, 1, 2), (3, 4, 5), (6, 7, 8),
+        (0, 3, 6), (1, 4, 7), (2, 5, 8),
+        (0, 4, 8), (2, 4, 6)
     )
     for poz in win_pozycja:
         if plansza[poz[0]] == plansza[poz[1]] == plansza[poz[2]] != " ":
