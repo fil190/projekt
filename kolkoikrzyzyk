@@ -1,0 +1,52 @@
+def print_plansza(plansza):
+    print("-------------")
+    print("| " + plansza[0] + " | " + plansza[1] + " | " + plansza[2] + " |")
+    print("-------------")
+    print("| " + plansza[3] + " | " + plansza[4] + " | " + plansza[5] + " |")
+    print("-------------")
+    print("| " + plansza[6] + " | " + plansza[7] + " | " + plansza[8] + " |")
+    print("-------------")
+
+def get_gracz_ruch(gracz, plansza):
+    zly_ruch = False
+    while not zly_ruch:
+        ruch = input(f"{gracz}, podaj numer pola (0-8): ")
+        if ruch.isdigit() and int(ruch) in range(9) and plansza[int(ruch)] == " ":
+            zly_ruch = True
+        else:
+            print("Zły ruch. Podaj inne pole.")
+    return int(ruch)
+
+def spr_wygr(plansza):
+    win_pozycja = (
+        (0, 1, 2), (3, 4, 5), (6, 7, 8),  # wiersze
+        (0, 3, 6), (1, 4, 7), (2, 5, 8),  # kolumny
+        (0, 4, 8), (2, 4, 6)             # przekątne
+    )
+    for poz in win_pozycja:
+        if plansza[poz[0]] == plansza[poz[1]] == plansza[poz[2]] != " ":
+            return plansza[poz[0]]
+    return None
+
+
+def start_gry():
+    plansza = [" "] * 9
+    graczs = ["Gracz X", "Gracz O"]
+    obecny_gracz = 0
+    zwyc = None
+
+    while not zwyc and " " in plansza:
+        print_plansza(plansza)
+        ruch = get_gracz_ruch(graczs[obecny_gracz], plansza)
+        plansza[ruch] = "X" if obecny_gracz == 0 else "O"
+        zwyc = spr_wygr(plansza)
+        obecny_gracz = (obecny_gracz + 1) % 2
+
+    print_plansza(plansza)
+    if zwyc:
+        print(f"{graczs[(obecny_gracz + 1) % 2]} wygrywa!")
+    else:
+        print("Remis.")
+
+if __name__ == "__main__":
+    start_gry()
