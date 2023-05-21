@@ -1,3 +1,5 @@
+import random
+
 def print_plansza(plansza):
     print("-------------")
     print("| " + plansza[0] + " | " + plansza[1] + " | " + plansza[2] + " |")
@@ -17,6 +19,11 @@ def get_gracz_ruch(gracz, plansza):
             print("Zły ruch. Podaj inne pole.")
     return int(ruch)
 
+def get_ai_ruch(plansza):
+    puste_pola = [i for i, x in enumerate(plansza) if x == " "]
+    ruch = random.choice(puste_pola)
+    return ruch
+
 def spr_wygr(plansza):
     win_pozycja = (
         (0, 1, 2), (3, 4, 5), (6, 7, 8),
@@ -28,16 +35,20 @@ def spr_wygr(plansza):
             return plansza[poz[0]]
     return None
 
-
 def start_gry():
     plansza = [" "] * 9
-    graczs = ["Gracz X", "Gracz O"]
+    graczs = ["Gracz X", "AI"]
     obecny_gracz = 0
     zwyc = None
 
     while not zwyc and " " in plansza:
         print_plansza(plansza)
-        ruch = get_gracz_ruch(graczs[obecny_gracz], plansza)
+
+        if obecny_gracz == 0:
+            ruch = get_gracz_ruch(graczs[obecny_gracz], plansza)
+        else:
+            ruch = get_ai_ruch(plansza)
+
         plansza[ruch] = "X" if obecny_gracz == 0 else "O"
         zwyc = spr_wygr(plansza)
         obecny_gracz = (obecny_gracz + 1) % 2
